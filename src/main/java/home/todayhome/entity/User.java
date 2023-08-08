@@ -21,29 +21,21 @@ public class User {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Size(max = 20)
-    @NotNull
     @Column(name = "nickname", nullable = false, length = 20)
     private String nickname;
 
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, length = 255)
     private String email;
 
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
 
-    @NotNull
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "modified_at")
     private Instant modifiedAt;
 
-    @NotNull
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = false;
 

@@ -19,10 +19,10 @@ public class Board {
     private Integer id;
 
     @NotNull
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = false)
+    private User userId;
 
-    @Size(max = 63)
     @NotNull
     @Column(name = "title", nullable = false, length = 63)
     private String title;
@@ -40,14 +40,12 @@ public class Board {
     @Column(name = "visitor_count", nullable = false)
     private Integer visitorCount;
 
-    @NotNull
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "moidified_at")
     private LocalDateTime moidifiedAt;
 
-    @NotNull
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = false;
 
