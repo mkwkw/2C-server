@@ -17,20 +17,25 @@ public class LikesBoard {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
     private User userId;
 
-    @Column(name = "board_id", nullable = false)
-    private Integer boardId;
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="board_id", nullable = false)
+    private Board boardId;
 
+    @NotNull
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
-    @Column(name = "is_deleted")
+    @NotNull
+    @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;
 
     @Column(name = "is_liked")

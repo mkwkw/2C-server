@@ -18,20 +18,25 @@ public class Board {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
     private User userId;
 
+    @NotNull
     @Column(name = "title", nullable = false, length = 63)
     private String title;
 
+    @NotNull
     @Lob
     @Column(name = "content", nullable = false)
     private String content;
 
+    @NotNull
     @Column(name = "heart_count", nullable = false)
     private Integer heartCount;
 
+    @NotNull
     @Column(name = "visitor_count", nullable = false)
     private Integer visitorCount;
 
