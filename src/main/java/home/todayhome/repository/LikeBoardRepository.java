@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface BoardLikeRepository extends JpaRepository<LikesBoard, Integer> {
+public interface LikeBoardRepository extends JpaRepository<LikesBoard, Integer> {
     Optional<LikesBoard> findLikesBoardByUserAndBoard(User user, Board board);
 
 }
