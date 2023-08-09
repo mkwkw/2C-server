@@ -17,7 +17,7 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     @Query("SELECT new home.todayhome.dto.BoardDto(b.id, u.nickname, b.title, b.content, b.heartCount, b.visitorCount, b.createdAt) " +
             "FROM Board b " +
             "INNER JOIN User u on u = b.user "
-    )
+
     List<BoardDto> findBoardPage(Pageable pageable);
 
     @Query("SELECT b From Board b INNER JOIN User u on u = b.user where b.id = :boardId")

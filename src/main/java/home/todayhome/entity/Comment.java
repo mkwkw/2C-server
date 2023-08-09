@@ -24,7 +24,7 @@ public class Comment {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="board_index", nullable = false)
+    @JoinColumn(name="board_id", nullable = false)
     private Board board;
 
     @NotNull
@@ -33,7 +33,7 @@ public class Comment {
     private User user;
 
     @NotNull
-    @Column(name = "content", nullable = false, length = 200)
+    @Column(name = "comment_contents", nullable = false, length = 200)
     private String content;
 
     @NotNull
