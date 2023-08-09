@@ -22,12 +22,12 @@ public class LikesComment {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="comment_id", nullable = false)
-    private Comment commentId;
+    private Comment comment;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
-    private User userId;
+    private User user;
 
     @NotNull
     @Column(name = "created_at", nullable = false)
