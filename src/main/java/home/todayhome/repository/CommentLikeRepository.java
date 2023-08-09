@@ -1,4 +1,4 @@
-package home.todayhome.repository.comment;
+package home.todayhome.repository;
 
 import home.todayhome.entity.LikesComment;
 import org.springframework.data.jpa.repository.JpaRepository;
