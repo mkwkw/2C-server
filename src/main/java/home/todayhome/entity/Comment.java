@@ -21,12 +21,12 @@ public class Comment {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="board_index", nullable = false)
-    private Board boardIndex;
+    private Board board;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
-    private User userId;
+    private User user;
 
     @NotNull
     @Column(name = "content", nullable = false, length = 200)
