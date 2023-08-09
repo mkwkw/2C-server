@@ -5,7 +5,6 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,6 +16,7 @@ import java.time.LocalDateTime;
 @Where(clause = "is_deleted is NULL OR is_deleted false")
 @Table(name = "likes_board")
 public class LikesBoard {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
