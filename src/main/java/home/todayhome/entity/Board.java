@@ -33,7 +33,7 @@ public class Board {
 
     @NotNull
     @Lob
-    @Column(name = "content", nullable = false)
+    @Column(name = "board_contents", nullable = false)
     private String content;
 
     @NotNull
