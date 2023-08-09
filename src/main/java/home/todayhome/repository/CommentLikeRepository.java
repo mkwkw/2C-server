@@ -1,5 +1,6 @@
 package home.todayhome.repository;
 
+
 import home.todayhome.entity.Comment;
 import home.todayhome.entity.LikesComment;
 import home.todayhome.entity.User;
@@ -9,4 +10,5 @@ import java.util.Optional;
 
 public interface CommentLikeRepository extends JpaRepository<LikesComment, Integer> {
     Optional<LikesComment> findLikesCommentByUserAndComment(User user, Comment comment);
+
 }

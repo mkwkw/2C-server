@@ -1,6 +1,7 @@
 package home.todayhome.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,8 +14,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Where(clause = "is_deleted is NULL OR is_deleted = false")
 @Table(name = "likes_board")
-public class LikesBoard{
+public class LikesBoard {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -38,7 +41,7 @@ public class LikesBoard{
     private LocalDateTime modifiedAt;
 
     @NotNull
-    @Column(name = "is_deleted", nullable = false)
+    @Column(name = "is_deleted")
     private Boolean isDeleted;
 
     @Column(name = "is_liked")

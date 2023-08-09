@@ -1,7 +1,7 @@
 package home.todayhome.entity;
 
 import lombok.*;
-
+import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,10 +11,11 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Table(name = "board")
+@Where(clause = "is_deleted is NULL")
 public class Board {
     @Id
     @Column(name = "id", nullable = false)
@@ -31,24 +32,24 @@ public class Board {
 
     @NotNull
     @Lob
-    @Column(name = "content", nullable = false)
+    @Column(name = "board_contents", nullable = false)
     private String content;
 
     @NotNull
     @Column(name = "heart_count", nullable = false)
-    private Integer heartCount;
+    private Integer heartCount = 0;
 
     @NotNull
     @Column(name = "visitor_count", nullable = false)
-    private Integer visitorCount;
+    private Integer visitorCount = 0;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "moidified_at")
     private LocalDateTime moidifiedAt;
 
-    @Column(name = "is_deleted", nullable = false)
-    private Boolean isDeleted = false;
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 
 }

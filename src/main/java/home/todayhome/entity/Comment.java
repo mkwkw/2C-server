@@ -1,6 +1,8 @@
 package home.todayhome.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Where;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,8 +14,9 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Where(clause = "is_deleted is NULL")
 @Table(name = "comment")
 public class Comment {
     @Id
@@ -31,7 +34,7 @@ public class Comment {
     private User user;
 
     @NotNull
-    @Column(name = "content", nullable = false, length = 200)
+    @Column(name = "comment_contents", nullable = false, length = 200)
     private String content;
 
     @NotNull
@@ -46,7 +49,7 @@ public class Comment {
     private LocalDateTime modifiedAt;
 
     @NotNull
-    @Column(name = "is_deleted", nullable = false)
-    private Boolean isDeleted = false;
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 
 }
