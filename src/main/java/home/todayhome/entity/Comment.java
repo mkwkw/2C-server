@@ -1,7 +1,6 @@
 package home.todayhome.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,6 +11,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "comment")
 public class Comment {
     @Id
@@ -20,7 +22,7 @@ public class Comment {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="board_index", nullable = false)
+    @JoinColumn(name="board_id", nullable = false)
     private Board board;
 
     @NotNull
