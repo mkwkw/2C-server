@@ -3,10 +3,7 @@ package home.todayhome.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -21,12 +18,14 @@ public class LikesComment {
     private Integer id;
 
     @NotNull
-    @Column(name = "comment_id", nullable = false)
-    private Integer commentId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="comment_id", nullable = false)
+    private Comment commentId;
 
     @NotNull
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = false)
+    private User userId;
 
     @NotNull
     @Column(name = "created_at", nullable = false)
@@ -35,7 +34,8 @@ public class LikesComment {
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
-    @Column(name = "is_deleted")
+    @NotNull
+    @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;
 
     @Column(name = "is_liked")
