@@ -23,12 +23,12 @@ public class LikesBoard {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
-    private User userId;
+    private User user;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="board_id", nullable = false)
-    private Board boardId;
+    private Board board;
 
     @NotNull
     @Column(name = "created_at", nullable = false)
