@@ -24,6 +24,7 @@ public class JwtService {
     private String secretKey; //yaml에서 가져오기
 
     public static final String CLAIM_NAME_USER_EMAIL = "useremail";
+    public static final String CLAIM_NAME_USER_ID = "userid";
     private Algorithm algorithm;
     private JWTVerifier jwtVerifier;
 
@@ -34,21 +35,25 @@ public class JwtService {
     }
 
     //memberId -> jwt 토큰
-    public String encode(String userEmail){
+    public String encode(String userEmail, Integer userId){
         LocalDateTime expireAt = LocalDateTime.now().plusWeeks(4L);
         Date date = Timestamp.valueOf(expireAt);
 
         return JWT.create()
                 .withClaim(CLAIM_NAME_USER_EMAIL, userEmail)
+                .withClaim(CLAIM_NAME_USER_ID, userId)
                 .withExpiresAt(date)
                 .sign(algorithm);
     }
 
     //jwt토큰 -> userEmail
-    public Map<String, String> decode(String token){
+    public Map<String, Object> decode(String token){
         try{
             DecodedJWT jwt = jwtVerifier.verify(token);
-            return Map.of(CLAIM_NAME_USER_EMAIL, jwt.getClaim(CLAIM_NAME_USER_EMAIL).asString());
+            return Map.of(
+                    CLAIM_NAME_USER_EMAIL, jwt.getClaim(CLAIM_NAME_USER_EMAIL).asString(),
+                    CLAIM_NAME_USER_ID, jwt.getClaim(CLAIM_NAME_USER_ID).asInt()
+                );
         }
         catch (JWTVerificationException e){
             log.warn("Failed to decode jwt. token: {}", token, e);
