@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "likes-comment")
-public class LikesComment {
+@Table(name = "likes_comment")
+public class LikesComment{
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
