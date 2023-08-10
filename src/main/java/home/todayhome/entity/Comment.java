@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 @Table(name = "comment")
 public class Comment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -35,7 +36,7 @@ public class Comment {
 
     @NotNull
     @Column(name = "comment_contents", nullable = false, length = 200)
-    private String content;
+    private String contents;
 
     @NotNull
     @Column(name = "heart_count", nullable = false)
