@@ -49,7 +49,6 @@ public class Comment {
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
-    @NotNull
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 

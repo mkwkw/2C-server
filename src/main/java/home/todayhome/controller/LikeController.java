@@ -1,5 +1,9 @@
 package home.todayhome.controller;
 
+import home.todayhome.dto.LikesResponse;
+import home.todayhome.dto.Response;
+import home.todayhome.security.AuthInfo;
+import home.todayhome.security.TokenEmailAndId;
 import home.todayhome.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,33 +14,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("")
 @Slf4j
 public class LikeController {
     private final LikeService likeService;
-    @PostMapping("/post/{id}/like")
-    //TODO : 사용자 ID 어떻게 받아올 것인가. 받아온 것 어디에서 가져올 것인가.
-    public String BoardLikePlus(
-            @PathVariable String id
-    ){
+
+    @PostMapping("/posts/{id}/likes")
+    public Response<LikesResponse> BoardLikePlus(
+            @PathVariable String id,
+            @TokenEmailAndId AuthInfo authInfo
+    ) {
         Integer intBoardId = Integer.valueOf(id);
-        //임시 사용자 mock id
-        Integer userId = 1;
+        Integer userId = authInfo.getUserId();
+        log.info("" + userId);
         String likeWhere = "Board";
-        Integer likeId = likeService.likePlus(intBoardId, userId, likeWhere);
-        return userId + "가 좋아요 눌렸습니다."+likeId;
+        LikesResponse likesResponse = likeService.likePlus(intBoardId, userId, likeWhere);
+        return Response.success(likesResponse);
     }
 
-    @PostMapping("/comments/{id}/like")
-    //TODO : 사용자 ID 어떻게 받아올 것인가. 받아온 것 어디에서 가져올 것인가.
-    public String CommentLikePlus(
-            @PathVariable String id
-    ){
+    @PostMapping("/comments/{id}/likes")
+    public Response<LikesResponse> CommentLikePlus(
+            @PathVariable String id,
+            @TokenEmailAndId AuthInfo authInfo
+    ) {
         Integer intCommentId = Integer.valueOf(id);
-        //임시 사용자 mock id
-        Integer userId = 1;
+        Integer userId = authInfo.getUserId();
+
         String likeWhere = "Comment";
-        Integer likeId = likeService.likePlus(intCommentId, userId, likeWhere);
-        return userId + "가 좋아요 눌렸습니다."+likeId;
+        LikesResponse likesResponse = likeService.likePlus(intCommentId, userId, likeWhere);
+        return Response.success(likesResponse);
     }
 }
