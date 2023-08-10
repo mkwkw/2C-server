@@ -35,7 +35,7 @@ public class CommentController {
         return commentService.getComments(boardId);
     }
 
-    @PatchMapping("/{commentId}")
+    @PutMapping("/{commentId}")
     public CommentDto.CommentResponse updateComment(
             @TokenEmailAndId AuthInfo authInfo,
             @PathVariable Integer commentId,
