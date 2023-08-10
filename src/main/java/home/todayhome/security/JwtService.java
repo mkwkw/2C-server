@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,9 +56,14 @@ public class JwtService {
                     CLAIM_NAME_USER_ID, jwt.getClaim(CLAIM_NAME_USER_ID).asInt()
                 );
         }
+        catch (TokenExpiredException e){
+            log.warn("토큰이 만료되었습니다.");
+            throw new RuntimeException("토큰이 만료되었습니다.");
+        }
         catch (JWTVerificationException e){
             log.warn("Failed to decode jwt. token: {}", token, e);
-            return null;
+            throw new RuntimeException("유효하지 않은 토큰입니다.");
         }
     }
+
 }
