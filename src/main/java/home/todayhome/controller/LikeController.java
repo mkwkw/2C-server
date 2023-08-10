@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("")
 @Slf4j
 public class LikeController {
     private final LikeService likeService;
 
-    @PostMapping("/post/{id}/like")
+    @PostMapping("/posts/{id}/likes")
     public Response<LikesResponse> BoardLikePlus(
             @PathVariable String id,
             @TokenEmailAndId AuthInfo authInfo
@@ -31,7 +31,7 @@ public class LikeController {
         return Response.success(likesResponse);
     }
 
-    @PostMapping("/comments/{id}/like")
+    @PostMapping("/comments/{id}/likes")
     public Response<LikesResponse> CommentLikePlus(
             @PathVariable String id,
             @TokenEmailAndId AuthInfo authInfo
