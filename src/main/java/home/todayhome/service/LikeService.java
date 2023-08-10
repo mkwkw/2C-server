@@ -25,6 +25,7 @@ public class LikeService {
     private final LikeBoardRepository likeBoardRepository;
     private final LikeCommentRepository likeCommentRepository;
 
+    @Transactional
     public LikesResponse likePlus(Integer id, Integer userId, String likeWhere) {
         LikesResponse likesResponse;
         if (likeWhere.equals("Board")) {
@@ -38,7 +39,7 @@ public class LikeService {
         return likesResponse;
     }
 
-    @Transactional
+
     public LikesBoard likePlusAtBoard(Integer boardId, Integer userId) {
 //        Board 객체 가져오기
         Board board = boardRepository
@@ -85,7 +86,6 @@ public class LikeService {
         return likeBoard;
     }
 
-    @Transactional
     public LikesComment likePlusAtComment(Integer commentId, Integer userId) {
         Comment comment = commentRepository
                 .findById(commentId)
@@ -129,7 +129,6 @@ public class LikeService {
         return likeComment;
     }
 
-    @Transactional
     public LikesBoard likeCancelAtBoard(Integer likeId, LikesBoard likeBoard) {
         LikesBoard boardLikeUpdated = likeBoardRepository.findById(likeId)
                 .orElseThrow(() -> new NotFoundException("해당 id의 유저가 좋아요를 누른 적이 없습니다."));
@@ -147,7 +146,6 @@ public class LikeService {
         return boardLikeUpdated;
     }
 
-    @Transactional
     public LikesComment likeCancelAtComment(Integer likeId) {
         LikesComment commentLikeUpdated = likeCommentRepository.findById(likeId)
                 .orElseThrow(() -> new NotFoundException("해당 id의 유저가 좋아요를 누른 적이 없습니다."));
