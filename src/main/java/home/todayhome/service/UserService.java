@@ -64,8 +64,6 @@ public class UserService {
     }
 
     public ResponseEntity<Map<String,String>> logout(LogoutRequest logoutRequest) {
-        String email = logoutRequest.getEmail();
-
         Map<String,String> responseBody = new HashMap<>();
         responseBody.put("message","로그아웃 되었습니다.");
 

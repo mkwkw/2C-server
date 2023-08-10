@@ -26,6 +26,7 @@ public class LikeController {
     ) {
         Integer intBoardId = Integer.valueOf(id);
         Integer userId = authInfo.getUserId();
+        log.info("" + userId);
         String likeWhere = "Board";
         LikesResponse likesResponse = likeService.likePlus(intBoardId, userId, likeWhere);
         return Response.success(likesResponse);
@@ -37,10 +38,8 @@ public class LikeController {
             @TokenEmailAndId AuthInfo authInfo
     ) {
         Integer intCommentId = Integer.valueOf(id);
-//        TODO : 회원가입 로그인 구현 되면 살리기
-//        Integer userId = authInfo.getUserId();
-        //임시 사용자 mock id
-        Integer userId = 1;
+        Integer userId = authInfo.getUserId();
+
         String likeWhere = "Comment";
         LikesResponse likesResponse = likeService.likePlus(intCommentId, userId, likeWhere);
         return Response.success(likesResponse);
