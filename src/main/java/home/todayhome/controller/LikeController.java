@@ -2,9 +2,6 @@ package home.todayhome.controller;
 
 import home.todayhome.dto.LikesResponse;
 import home.todayhome.dto.Response;
-import home.todayhome.entity.Likes;
-import home.todayhome.entity.LikesBoard;
-import home.todayhome.entity.LikesComment;
 import home.todayhome.security.AuthInfo;
 import home.todayhome.security.TokenEmailAndId;
 import home.todayhome.service.LikeService;
