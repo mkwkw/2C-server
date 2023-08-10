@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface LikeBoardRepository extends JpaRepository<LikesBoard, Integer> {
-    Optional<LikesBoard> findLikesBoardByUserAndBoard(User user, Board board);
+    Optional<LikesBoard> findLikesBoardByUserIdAndBoardId(Integer userId, Integer boardId);
 
 }
