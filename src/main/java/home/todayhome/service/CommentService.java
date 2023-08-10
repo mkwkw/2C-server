@@ -11,11 +11,13 @@ import home.todayhome.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -54,7 +56,7 @@ public class CommentService {
     public List<CommentDto.CommentResponse> getComments(Integer boardId){
 
         log.info("commentRepository : {}" , commentRepository.findAllByBoardId(boardId));
-        List<Comment> comments = commentRepository.findAllByBoardId(boardId);
+        List<Comment> comments = commentRepository.findAllByBoardIdAndIsDeletedOrIsDeletedIsNull(boardId,false);
         return CommentDto.CommentResponse.toResponse(comments);
     }
 
@@ -83,6 +85,37 @@ public class CommentService {
             LocalDateTime modifiedTime = LocalDateTime.now();
             comment.setModifiedAt(modifiedTime);
         }
+
+        commentRepository.save(comment);
+        return CommentDto.CommentResponse.toResponse(comment);
+    }
+
+    public CommentDto.CommentResponse deleteComment(
+            String userEmail,
+            Integer commentId,
+            CommentDto.DeleteCommentRequest deleteCommentRequest
+    ){
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 댓글입니다."));
+
+        String writer = comment.getUser().getEmail();
+
+        if (!writer.equals(userEmail)){
+            throw new NotFoundException("잘못된 접근입니다.");
+        }
+
+        boolean isDeleteUpdate = false;
+
+        if(deleteCommentRequest.getIsDeleted() !=null){
+            comment.setIsDeleted(deleteCommentRequest.getIsDeleted());
+            isDeleteUpdate = true;
+        }
+
+        if (isDeleteUpdate){
+            comment.setIsDeleted(true);
+        }
+
 
         commentRepository.save(comment);
         return CommentDto.CommentResponse.toResponse(comment);
