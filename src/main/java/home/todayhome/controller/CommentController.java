@@ -28,4 +28,11 @@ public class CommentController {
         return ResponseEntity.ok(commentService.createComment(createCommentRequest, authInfo.getUserEmail()));
     }
 
+    @GetMapping("/")
+    public List<CommentDto.CommentResponse> getComments(
+            @Valid @RequestParam Integer boardId
+    ){
+        return commentService.getComments(boardId);
+    }
+
 }
