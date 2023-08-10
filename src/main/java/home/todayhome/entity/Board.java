@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @Where(clause = "is_deleted is NULL")
 public class Board {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
