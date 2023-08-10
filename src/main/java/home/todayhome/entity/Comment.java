@@ -35,7 +35,7 @@ public class Comment {
 
     @NotNull
     @Column(name = "comment_contents", nullable = false, length = 200)
-    private String content;
+    private String contents;
 
     @NotNull
     @Column(name = "heart_count", nullable = false)
