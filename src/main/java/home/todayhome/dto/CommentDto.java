@@ -3,6 +3,7 @@ package home.todayhome.dto;
 import home.todayhome.entity.Comment;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +31,31 @@ public class CommentDto {
     @ToString
     @Builder
     @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PatchCommentRequest {
+
+        private Integer boardId;
+
+        private Integer commentId;
+
+        private String contents;
+
+        private LocalDateTime modifiedAt;
+
+        public LocalDateTime getModifiedAt() {
+            return modifiedAt;
+        }
+        public void setModifiedAt(LocalDateTime modifiedAt) {
+            this.modifiedAt = modifiedAt;
+        }
+
+    }
+
+
+    @ToString
+    @Builder
+    @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -41,11 +67,13 @@ public class CommentDto {
 
         private Integer commentId;
 
-        private String comments;
+        private String contents;
 
         private Integer heartCount;
 
         private LocalDateTime createdAt;
+
+        private LocalDateTime modifiedAt;
 
 //        private
 
@@ -54,9 +82,10 @@ public class CommentDto {
                     .userEmail(comment.getUser().getEmail())
                     .boardId(comment.getBoard().getId())
                     .commentId(comment.getId())
-                    .comments(comment.getContents())
+                    .contents(comment.getContents())
                     .heartCount(comment.getHeartCount())
                     .createdAt(comment.getCreatedAt())
+                    .modifiedAt(comment.getModifiedAt())
                     .build();
         }
 
