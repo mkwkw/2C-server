@@ -43,14 +43,8 @@ public class CommentDto {
 
         private LocalDateTime modifiedAt;
 
-        public LocalDateTime getModifiedAt() {
-            return modifiedAt;
-        }
-        public void setModifiedAt(LocalDateTime modifiedAt) {
-            this.modifiedAt = modifiedAt;
-        }
-
     }
+
 
 
     @ToString
