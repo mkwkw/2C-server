@@ -31,14 +31,13 @@ public class JwtTestController {
         return jwtService.decode(jwtToken);
     }
 
-    //TODO. swagger에서 테스트해보려면 따로 헤더 설정 필요
     @ApiOperation("Request Header에서 얻은 Jwt token으로 user email과 id 얻기")
     @GetMapping("/header")
-    public void getMemberGeneratedId(@TokenEmailAndId AuthInfo authInfo){
+    public String getMemberGeneratedId(@TokenEmailAndId AuthInfo authInfo){
         log.info("authinfo={}", authInfo);
         log.info("userEmail={}", authInfo.getUserEmail());
         log.info("userId={}", authInfo.getUserId());
         //로그는 잘 뜨는데 왜 리턴은 안될까
-        //return authInfo.getMemberGenerationId().toString();
+        return "이메일: "+authInfo.getUserEmail()+" 아이디: "+authInfo.getUserId().toString();
     }
 }
