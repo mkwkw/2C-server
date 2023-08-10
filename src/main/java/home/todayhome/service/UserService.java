@@ -5,6 +5,7 @@ import home.todayhome.dto.user.LogoutRequest;
 import home.todayhome.dto.user.SignupRequest;
 import home.todayhome.entity.User;
 import home.todayhome.repository.UserRepository;
+import home.todayhome.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
+    private final JwtService jwtService;
+
     public void signup(SignupRequest signupResponse) {
         if (userRepository.existsByEmail(signupResponse.getEmail())) {
             throw new RuntimeException("이미 등록된 이메일입니다.");
@@ -41,15 +45,18 @@ public class UserService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type","application/json");
-        headers.add("Authorization","Bearer your_access_token_here");
 
         if(user != null && user.getPassword().equals(password)){
-            String responseBody = "{ \"message\": \"로그인이 성공적으로 완료되었습니다.\" }";
+
+            //회원인 경우에 jwt token 발급해서 헤더에 넣기
+            String token = jwtService.encode(email, user.getId());
+            headers.add("Authorization","Bearer "+token);
+            String responseBody = "{ message: 로그인이 성공적으로 완료되었습니다.}";
             return ResponseEntity.ok()
                     .headers(headers)
                     .body(responseBody);
         } else {
-            String responseBody = "{ \"message\": \"아이디 또는 비밀번호가 일치하지 않습니다.\" }";
+            String responseBody = "{ message: 아이디 또는 비밀번호가 일치하지 않습니다.}";
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .headers(headers)
                     .body(responseBody);

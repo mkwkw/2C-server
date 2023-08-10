@@ -14,26 +14,26 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/test/jwt")
+@RequestMapping("/tests/jwt")
 public class JwtTestController {
 
     private final JwtService jwtService;
 
     @ApiOperation("사용자 email과 id를 이용해서 jwt token 생성")
-    @GetMapping("/encode")
+    @GetMapping("/encoding")
     public String jwtEncode(@ApiParam(name = "email", value = "user email", example = "abc@de.com") @RequestParam("email") String userEmail, @ApiParam(name = "user-id", value = "user id", example = "1") @RequestParam("user-id") Integer userId){
         return jwtService.encode(userEmail, userId);
     }
 
     @ApiOperation("Jwt token 복호화해서 user email과 id 얻기")
-    @GetMapping("/decode")
+    @GetMapping("/decoding")
     public Map<String, Object> jwtDecode(@ApiParam(name = "token", value = "jwt token(by email and id)", example = "euKdfkj~~") @RequestParam("token") String jwtToken){
         return jwtService.decode(jwtToken);
     }
 
     //TODO. swagger에서 테스트해보려면 따로 헤더 설정 필요
     @ApiOperation("Request Header에서 얻은 Jwt token으로 user email과 id 얻기")
-    @GetMapping
+    @GetMapping("/header")
     public void getMemberGeneratedId(@TokenEmailAndId AuthInfo authInfo){
         log.info("authinfo={}", authInfo);
         log.info("userEmail={}", authInfo.getUserEmail());
