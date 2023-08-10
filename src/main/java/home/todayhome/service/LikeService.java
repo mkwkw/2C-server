@@ -57,7 +57,6 @@ public class LikeService {
         Board board = boardRepository
                 .findById(boardId)
                 .orElseThrow(() -> new NotFoundException("작성한 게시글이 없습니다."));
-        log.info(board.toString());
 
 
 //      User 객체 가져오기
@@ -77,7 +76,6 @@ public class LikeService {
                         .isLiked(false)
                         .build()
                 );
-        log.info("유저와 보드로 라이크 가져오기");
 
         likeBoardRepository.save(likeBoard);
         //BoardLike 올리기
@@ -97,7 +95,6 @@ public class LikeService {
             Integer likeId = likeBoard.getId();
             likeBoard = likeCancelAtBoard(likeId, likeBoard);
         }
-        log.info(likeBoard.getBoard() + "");
         return likeBoard;
     }
 
