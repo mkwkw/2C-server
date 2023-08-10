@@ -3,6 +3,7 @@ package home.todayhome.dto;
 import home.todayhome.entity.Comment;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +28,9 @@ public class CommentDto {
 
     }
 
+
+
+
     @ToString
     @Builder
     @Getter
@@ -41,7 +45,7 @@ public class CommentDto {
 
         private Integer commentId;
 
-        private String comments;
+        private String contents;
 
         private Integer heartCount;
 
@@ -54,7 +58,7 @@ public class CommentDto {
                     .userEmail(comment.getUser().getEmail())
                     .boardId(comment.getBoard().getId())
                     .commentId(comment.getId())
-                    .comments(comment.getContents())
+                    .contents(comment.getContents())
                     .heartCount(comment.getHeartCount())
                     .createdAt(comment.getCreatedAt())
                     .build();
