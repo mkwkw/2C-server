@@ -27,7 +27,11 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 
         String authorization = webRequest.getHeader("Authorization"); //request에서 Header에서 JWT 토큰 가져오기
-        if(authorization == null || !authorization.startsWith("Bearer")){
+        if(authorization == null) {
+            return AuthInfo.of("", -1);
+        }
+
+        if(!authorization.startsWith("Bearer")){
             throw new RuntimeException("UnauthorizedException");
         }
         String token = authorization.substring(7); //"Bearer" 뒤에 있는 토큰만 가져오기

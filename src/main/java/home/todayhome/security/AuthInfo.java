@@ -1,13 +1,21 @@
 package home.todayhome.security;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 
+@Builder
 @ToString
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class AuthInfo {
-    private String userEmail; //멤버 이메일 식별자를 담는 역할
-    private Integer userId; //DB에서 조회할 식별자를 담는 역할
+
+    @Builder.Default
+    @ApiModelProperty(name = "userEmail", value = "user email", example = "abc@de.com")
+    private String userEmail = ""; //멤버 이메일 식별자를 담는 역할
+
+    @Builder.Default
+    @ApiModelProperty(name = "userId", value = "user id", example = "1")
+    private Integer userId = -1; //DB에서 조회할 식별자를 담는 역할
+
 }
