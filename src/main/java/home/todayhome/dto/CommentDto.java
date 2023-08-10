@@ -28,7 +28,29 @@ public class CommentDto {
 
     }
 
+    @ToString
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PatchCommentRequest {
 
+        private Integer boardId;
+
+        private Integer commentId;
+
+        private String contents;
+
+        private LocalDateTime modifiedAt;
+
+        public LocalDateTime getModifiedAt() {
+            return modifiedAt;
+        }
+        public void setModifiedAt(LocalDateTime modifiedAt) {
+            this.modifiedAt = modifiedAt;
+        }
+
+    }
 
 
     @ToString
@@ -51,6 +73,8 @@ public class CommentDto {
 
         private LocalDateTime createdAt;
 
+        private LocalDateTime modifiedAt;
+
 //        private
 
         public static CommentResponse toResponse(Comment comment){
@@ -61,6 +85,7 @@ public class CommentDto {
                     .contents(comment.getContents())
                     .heartCount(comment.getHeartCount())
                     .createdAt(comment.getCreatedAt())
+                    .modifiedAt(comment.getModifiedAt())
                     .build();
         }
 

@@ -58,4 +58,34 @@ public class CommentService {
         return CommentDto.CommentResponse.toResponse(comments);
     }
 
+    public CommentDto.CommentResponse updateComment(
+            String userEmail,
+            Integer commentId,
+            CommentDto.PatchCommentRequest patchCommentRequest
+    ){
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new NotFoundException("존재하지 않는 댓글입니다."));
+
+        String writer = comment.getUser().getEmail();
+
+        if (!writer.equals(userEmail)){
+            throw new NotFoundException("잘못된 접근입니다.");
+        }
+
+        boolean isContentUpdated = false;
+
+        if(patchCommentRequest.getContents() !=null){
+            comment.setContents(patchCommentRequest.getContents());
+            isContentUpdated = true;
+        }
+
+        if (isContentUpdated){
+            LocalDateTime modifiedTime = LocalDateTime.now();
+            comment.setModifiedAt(modifiedTime);
+        }
+
+        commentRepository.save(comment);
+        return CommentDto.CommentResponse.toResponse(comment);
+    }
+
 }

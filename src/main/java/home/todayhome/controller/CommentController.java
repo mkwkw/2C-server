@@ -35,4 +35,13 @@ public class CommentController {
         return commentService.getComments(boardId);
     }
 
+    @PatchMapping("/{commentId}")
+    public CommentDto.CommentResponse updateComment(
+            @TokenEmailAndId AuthInfo authInfo,
+            @PathVariable Integer commentId,
+            @RequestBody @Validated CommentDto.PatchCommentRequest patchCommentRequest
+    ){
+
+        return commentService.updateComment(authInfo.getUserEmail(), commentId, patchCommentRequest);
+    }
 }
