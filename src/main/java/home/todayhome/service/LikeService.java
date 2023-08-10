@@ -3,10 +3,8 @@ package home.todayhome.service;
 import home.todayhome.dto.LikesResponse;
 import home.todayhome.entity.*;
 import home.todayhome.exception.NotFoundException;
-import home.todayhome.repository.LikeBoardRepository;
-import home.todayhome.repository.BoardRepository;
-import home.todayhome.repository.LikeCommentRepository;
-import home.todayhome.repository.UserRepository;
+import home.todayhome.mapper.LikesMapper;
+import home.todayhome.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,8 +18,7 @@ import java.time.LocalDateTime;
 public class LikeService {
     private final BoardRepository boardRepository;
 
-//    TODO :
-//     private final CommentRepository commentRepository
+    private final CommentRepository commentRepository;
 
     private final UserRepository userRepository;
 
@@ -32,27 +29,17 @@ public class LikeService {
         LikesResponse likesResponse;
         if (likeWhere.equals("Board")) {
             LikesBoard like = likePlusAtBoard(id, userId);
-
-            likesResponse = LikesResponse.builder()
-                    .likesId(like.getId())
-                    .likesAtContent(like.getBoard().getHeartCount())
-                    .isLiked(like.getIsLiked())
-                    .build();
+            likesResponse = LikesMapper.INSTANCE.LikesBoardToLikesResponse(like);
         } else {
-            LikesComment like  = likePlusAtComment(id, userId);
-
-            likesResponse = LikesResponse.builder()
-                    .likesId(like.getId())
-                    .likesAtContent(like.getComment().getHeartCount())
-                    .isLiked(like.getIsLiked())
-                    .build();
+            LikesComment like = likePlusAtComment(id, userId);
+            likesResponse = LikesMapper.INSTANCE.LikesCommentToLikesResponse(like);
         }
 
         return likesResponse;
     }
 
     @Transactional
-    private LikesBoard likePlusAtBoard(Integer boardId, Integer userId) {
+    public LikesBoard likePlusAtBoard(Integer boardId, Integer userId) {
 //        Board 객체 가져오기
         Board board = boardRepository
                 .findById(boardId)
@@ -62,7 +49,7 @@ public class LikeService {
 //      User 객체 가져오기
         User user = userRepository
                 .findById(userId)
-                .orElseThrow(() -> new NotFoundException("접속하신 유저 정보가 없습니다."));
+                .orElseThrow(() -> new NotFoundException("접속하신 유저 정보가 없습니다.!!!!"));
 
 
         // 해당 유저 좋아요 해당 게시글 좋아요 좋아요 객체 존재하는지
@@ -99,33 +86,13 @@ public class LikeService {
     }
 
     @Transactional
-    private LikesComment likePlusAtComment(Integer commentId, Integer userId) {
-        //TODO : Comment 객체 가져오기
-//            Comment comment = commentRepository
-//                    .findById(id)
-//                    .orElseThrow(()->new NotFoundException("작성한 게시글이 없습니다."));
-        //TODO: User 객체 가져오기
-//            User user = userRepository
-//                    .findById(userId)
-//                    .orElseThrow(()->new NotFoundException("접속하신 유저 정보가 없습니다."));
-//  TODO : 커멘트 레포지토리 완성되면 아래 거 없애기
-        User user = User.builder()
-                .id(userId)
-                .nickname("지원")
-                .email("way_2005@naver.com")
-                .password("1234")
-                .createdAt(LocalDateTime.now())
-                .isDeleted(false)
-                .build();
-        Comment comment = Comment.builder()
-                .id(commentId)
-                .board(new Board())
-                .user(user)
-                .contents("content")
-                .heartCount(20)
-                .createdAt(LocalDateTime.now())
-                .isDeleted(false)
-                .build();
+    public LikesComment likePlusAtComment(Integer commentId, Integer userId) {
+        Comment comment = commentRepository
+                .findById(commentId)
+                .orElseThrow(() -> new NotFoundException("작성한 게시글이 없습니다."));
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new NotFoundException("접속하신 유저 정보가 없습니다."));
 
 
         // 해당 유저 좋아요 해당 게시글 좋아요 좋아요 객체 존재하는지
@@ -148,13 +115,12 @@ public class LikeService {
             likeComment.setIsLiked(true);
             likeComment.setModifiedAt(LocalDateTime.now());
             likeCommentRepository.save(likeComment);
-            // TODO : CommentRepository 생성되면 살리기
-            // 댓글의 좋아요 수 변경(+1).
-//            Comment commentToChanged = commentRepository.findById(likeComment.getComment().getId())
-//                    .orElseThrow(()->new NotFoundException("해당 댓글이 없습니다."));
-//            Integer heartCount = commentToChanged.getHeartCount();
-//            commentToChanged.setHeartCount(heartCount+1);
-//            commentRepository.save(commentToChanged);
+//             댓글의 좋아요 수 변경(+1).
+            Comment commentToChanged = commentRepository.findById(likeComment.getComment().getId())
+                    .orElseThrow(()->new NotFoundException("해당 댓글이 없습니다."));
+            Integer heartCount = commentToChanged.getHeartCount();
+            commentToChanged.setHeartCount(heartCount+1);
+            commentRepository.save(commentToChanged);
         } else {
 //          좋아요 누른 적 있다면, likeCancel 메서드 실행  (좋아요 취소)
             Integer likeId = likeComment.getId();
@@ -164,7 +130,7 @@ public class LikeService {
     }
 
     @Transactional
-    private LikesBoard likeCancelAtBoard(Integer likeId, LikesBoard likeBoard) {
+    public LikesBoard likeCancelAtBoard(Integer likeId, LikesBoard likeBoard) {
         LikesBoard boardLikeUpdated = likeBoardRepository.findById(likeId)
                 .orElseThrow(() -> new NotFoundException("해당 id의 유저가 좋아요를 누른 적이 없습니다."));
         boardLikeUpdated.setIsLiked(false);
@@ -182,7 +148,7 @@ public class LikeService {
     }
 
     @Transactional
-    private LikesComment likeCancelAtComment(Integer likeId) {
+    public LikesComment likeCancelAtComment(Integer likeId) {
         LikesComment commentLikeUpdated = likeCommentRepository.findById(likeId)
                 .orElseThrow(() -> new NotFoundException("해당 id의 유저가 좋아요를 누른 적이 없습니다."));
         commentLikeUpdated.setIsLiked(false);
@@ -190,13 +156,12 @@ public class LikeService {
 
         likeCommentRepository.save(commentLikeUpdated);
 
-        // TODO : CommentRepository 생성되면 살리기
         //  댓글의 좋아요 수 변경(-1).
-//            Comment commentToChanged = commentRepository.findById(likeComment.getComment().getId())
-//                    .orElseThrow(()->new NotFoundException("해당 댓글이 없습니다."));
-//            Integer heartCount = commentToChanged.getHeartCount();
-//            commentToChanged.setHeartCount(heartCount-1);
-//            commentRepository.save(commentToChanged);
+            Comment commentToChanged = commentRepository.findById(commentLikeUpdated.getComment().getId())
+                    .orElseThrow(()->new NotFoundException("해당 댓글이 없습니다."));
+            Integer heartCount = commentToChanged.getHeartCount();
+            commentToChanged.setHeartCount(heartCount-1);
+            commentRepository.save(commentToChanged);
 
         return commentLikeUpdated;
 
