@@ -60,6 +60,9 @@ public class UserService {
         } else {
             // 로그인 성공 처리
             String responseBody = "{ \"message\": \"로그인이 성공적으로 완료되었습니다.\" }";
+            //회원인 경우에 jwt token 발급해서 헤더에 넣기
+            String token = jwtService.encode(email, user.getId());
+            headers.add("Authorization","Bearer "+token);
             return ResponseEntity.ok()
                     .headers(headers)
                     .body(responseBody);
