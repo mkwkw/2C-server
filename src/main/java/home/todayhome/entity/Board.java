@@ -1,6 +1,7 @@
 package home.todayhome.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 @Table(name = "board")
 @Where(clause = "is_deleted = false")
 public class Board {
@@ -53,6 +55,6 @@ public class Board {
     private LocalDateTime moidifiedAt;
 
     @Column(name = "is_deleted")
-    private Boolean isDeleted;
+    private Boolean isDeleted = false;
 
 }
