@@ -31,7 +31,7 @@ public class BoardController {
     @ApiOperation("게시글 목록 페이징")
     @GetMapping("/posts")
     public Response<?> showBoardPage(@PageableDefault(size = 10, page = 0, sort={"visitorCount"}) Pageable pageable) {
-        Page<BoardResponse> boards = boardService.getBoardPage(pageable).map(BoardResponse::fromDto);
+        Page<BoardResponse> boards = boardService.getBoardDtoPage(pageable).map(BoardResponse::fromDto);
         return Response.success(boards);
     }
 

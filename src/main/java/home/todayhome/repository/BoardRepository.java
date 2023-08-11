@@ -18,8 +18,9 @@ import java.util.Optional;
 public interface BoardRepository extends JpaRepository<Board, Integer> {
     @Query("SELECT new home.todayhome.dto.board.BoardDto(b.id, u.nickname, b.title, b.content, count(c.id), b.heartCount, b.visitorCount, b.createdAt) " +
             "FROM Board b " +
-            "INNER JOIN User u on u.id = b.user.id " +
-            "INNER JOIN Comment c on c.board.id = b.id "
+            "LEFT JOIN b.user u " +
+            "LEFT JOIN Comment c on c.board.id = b.id " +
+            "GROUP BY b.id "
     )
     Page<BoardDto> findBoardDtoPage(Pageable pageable);
 
@@ -32,8 +33,8 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
 
     @Query("SELECT new home.todayhome.dto.board.BoardDto(b.id, u.nickname, b.title, b.content, count(c.id), b.heartCount, b.visitorCount, b.createdAt) " +
             "FROM Board b " +
-            "INNER JOIN b.user u " +
-            "INNER JOIN Comment c on c.board.id = b.id " +
+            "LEFT JOIN Comment c on c.board.id = b.id " +
+            "LEFT JOIN b.user u " +
             "WHERE b.id = :boardId "
     )
     Optional<BoardDto> findByBoardId(@Param("boardId") Integer boardId);
