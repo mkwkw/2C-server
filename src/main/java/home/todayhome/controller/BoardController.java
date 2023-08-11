@@ -53,7 +53,7 @@ public class BoardController {
      * @param id 게시글 ID
      * @return BoardDetailResponse
      */
-    @ApiOperation("게시글 단건 조회")
+    @ApiOperation("게시글 상세보기")
     @GetMapping("/posts/{id}")
     public Response<?> showBoardPage(@PathVariable("id") Integer id) {
         BoardDto board = boardService.getBoard(id);
@@ -67,6 +67,7 @@ public class BoardController {
      * @param requestBoard 수정 정보
      * @return String 성공 여부
      */
+    @ApiOperation("게시글 수정")
     @PutMapping("/posts/{id}")
     public Response<?> updateBoard(@TokenEmailAndId AuthInfo authInfo, @PathVariable("id") Integer boardId, @RequestBody RequestUpdateBoard requestBoard) {
         boardService.updateBoard(authInfo.getUserEmail(), boardId, requestBoard.getTitle(), requestBoard.getContent());
@@ -79,6 +80,7 @@ public class BoardController {
      * @param boardId 게시글 ID
      * @return String 성공 메시지
      */
+    @ApiOperation("게시글 삭제")
     @DeleteMapping("/posts/{id}")
     public Response<?> deleteBoard(@TokenEmailAndId AuthInfo authInfo, @PathVariable("id") Integer boardId){
         boardService.deleteBoard(authInfo.getUserEmail(),boardId);
