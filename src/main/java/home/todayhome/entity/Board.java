@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "board")
-@Where(clause = "is_deleted is NULL")
+@Where(clause = "is_deleted = false")
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
