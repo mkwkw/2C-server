@@ -59,6 +59,12 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
+    // https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-spring-boot2
+    implementation group: 'io.github.resilience4j', name: 'resilience4j-spring-boot2', version: '1.7.1'
+
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+
 
 
 }
