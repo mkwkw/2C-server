@@ -5,6 +5,7 @@ import home.todayhome.dto.Response;
 import home.todayhome.security.AuthInfo;
 import home.todayhome.security.TokenEmailAndId;
 import home.todayhome.service.BoardService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @Slf4j
+@Api(tags = "게시글 API")
 public class BoardController {
 
     private final BoardService boardService;
