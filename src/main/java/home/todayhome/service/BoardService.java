@@ -122,7 +122,8 @@ public class BoardService {
         Board board = boardRepository.findBoardByBoardId(boardId).orElseThrow(() ->
                 new CustomException(Errorcode.NOT_FOUND_BOARD, String.format("boardId: %d 가 존재하지 않았습니다", boardId))
         );
-        boardRepository.delete(board);
+        board.setIsDeleted(true);
+        boardRepository.save(board);
     }
 
     /**
