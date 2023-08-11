@@ -6,6 +6,7 @@ import home.todayhome.dto.user.SignupRequest;
 import home.todayhome.dto.user.SignupResponse;
 import home.todayhome.service.UserService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
+@Api(tags = "회원 API")
 public class UserController {
     private final UserService userService;
     @ApiOperation("회원가입")

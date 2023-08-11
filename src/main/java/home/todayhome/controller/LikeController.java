@@ -6,6 +6,7 @@ import home.todayhome.security.AuthInfo;
 import home.todayhome.security.TokenEmailAndId;
 import home.todayhome.service.LikeService;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("")
 @Slf4j
+@Api(tags = "좋아요 API")
 public class LikeController {
     private final LikeService likeService;
 
