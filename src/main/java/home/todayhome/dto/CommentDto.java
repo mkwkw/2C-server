@@ -3,7 +3,6 @@ package home.todayhome.dto;
 import home.todayhome.entity.Comment;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,13 +42,15 @@ public class CommentDto {
 
         private LocalDateTime modifiedAt;
 
-        public LocalDateTime getModifiedAt() {
-            return modifiedAt;
-        }
-        public void setModifiedAt(LocalDateTime modifiedAt) {
-            this.modifiedAt = modifiedAt;
-        }
+    }
 
+    @ToString
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DeleteCommentRequest{
+        private Boolean isDeleted;
     }
 
 
@@ -74,8 +75,6 @@ public class CommentDto {
         private LocalDateTime createdAt;
 
         private LocalDateTime modifiedAt;
-
-//        private
 
         public static CommentResponse toResponse(Comment comment){
             return CommentResponse.builder()

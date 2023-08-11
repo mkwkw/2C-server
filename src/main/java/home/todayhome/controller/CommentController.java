@@ -35,7 +35,7 @@ public class CommentController {
         return commentService.getComments(boardId);
     }
 
-    @PatchMapping("/{commentId}")
+    @PutMapping("/{commentId}")
     public CommentDto.CommentResponse updateComment(
             @TokenEmailAndId AuthInfo authInfo,
             @PathVariable Integer commentId,
@@ -43,5 +43,16 @@ public class CommentController {
     ){
 
         return commentService.updateComment(authInfo.getUserEmail(), commentId, patchCommentRequest);
+    }
+
+    @PatchMapping("/{commentId}")
+    public ResponseEntity<String> deleteComment(
+            @TokenEmailAndId AuthInfo authInfo,
+            @PathVariable Integer commentId,
+            @RequestBody @Validated CommentDto.DeleteCommentRequest deleteCommentRequest
+    ){
+
+        commentService.deleteComment(authInfo.getUserEmail(), commentId, deleteCommentRequest);
+        return ResponseEntity.ok("삭제 완료");
     }
 }

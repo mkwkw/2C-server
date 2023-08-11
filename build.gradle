@@ -49,8 +49,8 @@ dependencies {
 
 
     // security (기능구현 완료 전까지 별도사용)
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
-//    testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
     // jwt
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'com.auth0:java-jwt:4.4.0'
@@ -59,11 +59,12 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
-    implementation 'org.springframework.boot:spring-boot-starter-aop'
-    implementation 'io.github.resilience4j:resilience4j-spring-boot2'
+    // https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-spring-boot2
+    implementation group: 'io.github.resilience4j', name: 'resilience4j-spring-boot2', version: '1.7.1'
 
-// https://mvnrepository.com/artifact/io.github.resilience4j/resilience4j-ratelimiter
-    implementation group: 'io.github.resilience4j', name: 'resilience4j-ratelimiter', version: '1.7.1'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+
 
 
 }

@@ -19,7 +19,6 @@ public class LikeService {
     private final BoardRepository boardRepository;
 
     private final CommentRepository commentRepository;
-
     private final UserRepository userRepository;
 
     private final LikeBoardRepository likeBoardRepository;
@@ -35,18 +34,15 @@ public class LikeService {
             LikesComment like = likePlusAtComment(id, userId);
             likesResponse = LikesMapper.INSTANCE.LikesCommentToLikesResponse(like);
         }
-
         return likesResponse;
     }
 
 
     public LikesBoard likePlusAtBoard(Integer boardId, Integer userId) {
-//        Board 객체 가져오기
+//       Board 객체 가져오기
         Board board = boardRepository
                 .findById(boardId)
                 .orElseThrow(() -> new NotFoundException("작성한 게시글이 없습니다."));
-
-
 //      User 객체 가져오기
         User user = userRepository
                 .findById(userId)
@@ -89,7 +85,7 @@ public class LikeService {
     public LikesComment likePlusAtComment(Integer commentId, Integer userId) {
         Comment comment = commentRepository
                 .findById(commentId)
-                .orElseThrow(() -> new NotFoundException("작성한 게시글이 없습니다."));
+                .orElseThrow(() -> new NotFoundException("작성한 댓글이 없습니다."));
         User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new NotFoundException("접속하신 유저 정보가 없습니다."));

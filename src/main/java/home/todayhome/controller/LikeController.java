@@ -5,6 +5,7 @@ import home.todayhome.dto.Response;
 import home.todayhome.security.AuthInfo;
 import home.todayhome.security.TokenEmailAndId;
 import home.todayhome.service.LikeService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class LikeController {
             ,paramType = "path"
             ,defaultValue = "None"
     )
+    @RateLimiter(name="backendA")
     @PostMapping("/posts/{id}/likes")
     public Response<LikesResponse> BoardLikePlus(
             @PathVariable String id,
@@ -39,10 +41,11 @@ public class LikeController {
     ) {
         Integer intBoardId = Integer.valueOf(id);
         Integer userId = authInfo.getUserId();
-        log.info("" + userId);
         String likeWhere = "Board";
         LikesResponse likesResponse = likeService.likePlus(intBoardId, userId, likeWhere);
+        log.info("게시글 좋아요 실행");
         return Response.success(likesResponse);
+
     }
 
     @ApiOperation(
@@ -59,6 +62,7 @@ public class LikeController {
 
         String likeWhere = "Comment";
         LikesResponse likesResponse = likeService.likePlus(intCommentId, userId, likeWhere);
+        log.info("게시글 좋아요 실행");
         return Response.success(likesResponse);
     }
 }
