@@ -10,3 +10,11 @@ spring:
 springdoc:
   swagger-ui:
     path: /api-doc.html
+resilience4j.ratelimiter:
+  instances:
+    backendA:
+      limitForPeriod: 2
+      limitRefreshPeriod: 5s
+      timeoutDuration: 33s
+      registerHealthIndicator: true
+      eventConsumerBufferSize: 100
