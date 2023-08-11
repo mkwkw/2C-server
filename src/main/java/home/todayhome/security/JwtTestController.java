@@ -1,5 +1,6 @@
 package home.todayhome.security;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/tests/jwt")
+@Api(tags = "JWT API")
 public class JwtTestController {
 
     private final JwtService jwtService;

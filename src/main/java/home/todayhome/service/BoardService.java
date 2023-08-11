@@ -54,7 +54,7 @@ public class BoardService {
             Long commentCount = boardRepository.findCommentCountByBoardId(boardId).orElseGet(()->0L);
             BoardDto boardDto = BoardDto.fromEntity(board);
             log.info("{} 댓글 갯수", commentCount);
-            boardDto.setCommentCount(commentCount);
+            boardDto.setCommentCount( commentCount);
             return boardDto;
         }).get();
     }
