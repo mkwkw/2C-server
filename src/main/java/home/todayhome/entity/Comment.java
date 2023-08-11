@@ -1,6 +1,7 @@
 package home.todayhome.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Where;
 
 
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 @Where(clause = "is_deleted = false")
 @Table(name = "comment")
 public class Comment {
@@ -50,6 +52,6 @@ public class Comment {
     private LocalDateTime modifiedAt;
 
     @Column(name = "is_deleted")
-    private Boolean isDeleted;
+    private Boolean isDeleted = false;
 
 }

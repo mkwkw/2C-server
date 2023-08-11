@@ -48,6 +48,7 @@ public class CommentService {
         comment.setHeartCount(0);
         comment.setCreatedAt(createDateTime);
         comment.setUser(writer);
+        comment.setIsDeleted(false);
 
         commentRepository.save(comment);
         return CommentDto.CommentResponse.toResponse(comment);
@@ -56,9 +57,10 @@ public class CommentService {
     public List<CommentDto.CommentResponse> getComments(Integer boardId){
 
         log.info("commentRepository : {}" , commentRepository.findAllByBoardId(boardId));
-        List<Comment> comments = commentRepository.findAllByBoardIdAndIsDeletedOrIsDeletedIsNull(boardId,false);
+        List<Comment> comments = commentRepository.findAllByBoardId(boardId);
         return CommentDto.CommentResponse.toResponse(comments);
     }
+
 
     public CommentDto.CommentResponse updateComment(
             String userEmail,
@@ -90,10 +92,9 @@ public class CommentService {
         return CommentDto.CommentResponse.toResponse(comment);
     }
 
-    public CommentDto.CommentResponse deleteComment(
+    public void deleteComment(
             String userEmail,
-            Integer commentId,
-            CommentDto.DeleteCommentRequest deleteCommentRequest
+            Integer commentId
     ){
 
         Comment comment = commentRepository.findById(commentId)
@@ -105,20 +106,9 @@ public class CommentService {
             throw new NotFoundException("잘못된 접근입니다.");
         }
 
-        boolean isDeleteUpdate = false;
 
-        if(deleteCommentRequest.getIsDeleted() !=null){
-            comment.setIsDeleted(deleteCommentRequest.getIsDeleted());
-            isDeleteUpdate = true;
-        }
-
-        if (isDeleteUpdate){
-            comment.setIsDeleted(true);
-        }
-
-
-        commentRepository.save(comment);
-        return CommentDto.CommentResponse.toResponse(comment);
+        commentRepository.deleteByComment(commentId);
+        CommentDto.CommentResponse.toResponse(comment);
     }
 
 }

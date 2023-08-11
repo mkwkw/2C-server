@@ -21,9 +21,9 @@ public class CommentDto {
 
         private String contents;
 
-        private Integer heartCount;
+//        private Integer heartCount;
 
-        private LocalDateTime createAt;
+//        private LocalDateTime createAt;
 
     }
 
@@ -34,24 +34,24 @@ public class CommentDto {
     @AllArgsConstructor
     public static class PatchCommentRequest {
 
-        private Integer boardId;
+//        private Integer boardId;
 
         private Integer commentId;
 
         private String contents;
 
-        private LocalDateTime modifiedAt;
+//        private LocalDateTime modifiedAt;
 
     }
 
-    @ToString
-    @Builder
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class DeleteCommentRequest{
-        private Boolean isDeleted;
-    }
+//    @ToString
+//    @Builder
+//    @Getter
+//    @NoArgsConstructor
+//    @AllArgsConstructor
+//    public static class DeleteCommentRequest{
+//        private Boolean isDeleted;
+//    }
 
 
     @ToString
@@ -76,6 +76,9 @@ public class CommentDto {
 
         private LocalDateTime modifiedAt;
 
+        private Boolean isDeleted;
+
+
         public static CommentResponse toResponse(Comment comment){
             return CommentResponse.builder()
                     .userEmail(comment.getUser().getEmail())
@@ -85,6 +88,7 @@ public class CommentDto {
                     .heartCount(comment.getHeartCount())
                     .createdAt(comment.getCreatedAt())
                     .modifiedAt(comment.getModifiedAt())
+                    .isDeleted(comment.getIsDeleted())
                     .build();
         }
 
