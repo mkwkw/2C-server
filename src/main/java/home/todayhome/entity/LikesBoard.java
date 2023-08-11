@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Where(clause = "is_deleted is NULL OR is_deleted = false")
+@Where(clause = "is_deleted = false")
 @Table(name = "likes_board")
 public class LikesBoard {
 

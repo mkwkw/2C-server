@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Where(clause = "is_deleted is NULL")
+@Where(clause = "is_deleted = false")
 @Table(name = "users")
 public class User {
     @Id
