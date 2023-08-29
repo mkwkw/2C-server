@@ -12,14 +12,14 @@
 
 ### 맡은 역할
 - 총 5명이서 각자 JWT, 회원, 게시글, 댓글, 좋아요 파트를 맡아서 진행
-- **JWT (민경원)**
+- **민경원: JWT**
     1. JWT 토큰 발급
     2. JWT 토큰 복호화  
     (Argument Resolver 이용)
 
 ### 개발 환경
-- Java 11, Spring boot, 2.7.14
-- AWS RDS
+- Java 11, Spring boot 2.7.14
+- AWS RDS(MySQL)
 
 ![ERD1](https://github.com/mkwkw/2C-server/assets/76611903/4fd58e20-6146-4b9e-bf0d-cd8387d895c5)
 
